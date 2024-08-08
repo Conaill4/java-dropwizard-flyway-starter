@@ -14,25 +14,27 @@ public class ClientController {
 
     ClientService clientService;
 
-    public ClientController(ClientService clientService) { this.clientService = clientService; ;}
+    public ClientController(final ClientService clientService)
+    {
+        this.clientService = clientService;
+    }
 
     @GET
     @Path("/clients")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProducts() throws SQLException
-    {   try {
+    {
+        try {
         return Response.ok().entity(clientService.getAllClients()).build();
-    }catch (SQLException e){
+    }catch (SQLException e) {
         return Response.status(Response.Status
                 .INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
     }
 
     }
 
-
-
-
 }
+
 
 
 
