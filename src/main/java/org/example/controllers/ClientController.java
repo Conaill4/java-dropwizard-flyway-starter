@@ -16,7 +16,7 @@ public class ClientController {
 
     ClientService clientService;
 
-    public ClientController(final ClientService clientService){
+    public ClientController(final ClientService clientService) {
         this.clientService = clientService;
     }
 

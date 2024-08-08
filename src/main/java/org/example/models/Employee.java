@@ -19,7 +19,7 @@ public class Employee {
         this.nationalInsuranceNumber = nationalInsuranceNumber;
     }
 
-    public Employee(){
+    public Employee() {
 
     }
 
