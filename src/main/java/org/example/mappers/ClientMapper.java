@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import  org.example.models.ClientResponse;
 
- public class ClientMapper {
+ public final class ClientMapper {
+     private ClientMapper() {
+
+     }
 
     public static List<ClientResponse> mapClientListToClientResponseList(final
             List<Client> clients) {
