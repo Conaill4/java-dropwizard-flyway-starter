@@ -19,7 +19,7 @@ public class ClientDao {
 
         List<Client> clients = new ArrayList<>();
 
-        try(Connection connection = DatabaseConnector.getConnection()) {
+        try (Connection connection = DatabaseConnector.getConnection()) {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(
@@ -31,9 +31,8 @@ public class ClientDao {
                 Client client = new Client(
                         resultSet.getInt("ClientID"),
                         resultSet.getString("ClientName"),
-                        new SalesEmployee(resultSet.getInt("SalesEmpID")
-                                ,resultSet
-                                .getBigDecimal("Commission"),
+                        new SalesEmployee(resultSet.getInt("SalesEmpID"),
+                                 resultSet.getBigDecimal("Commission"),
                                 new Employee()));
                 clients.add(client);
             }
