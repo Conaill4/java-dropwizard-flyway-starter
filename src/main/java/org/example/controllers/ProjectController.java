@@ -1,5 +1,6 @@
 package org.example.controllers;
 
+import org.example.models.ProjectRequest;
 import org.example.services.ProjectService;
 
 import javax.ws.rs.GET;
@@ -43,9 +44,9 @@ public class ProjectController {
                     .status(Response.Status.CREATED)
                     .entity(projectService.createProject(projectRequest))
                     .build();
-        } catch (FailedToCreateException | SQLException e) {
+        } catch (SQLException e) {
             return Response.serverError().build();
-        } catch (InvalidException e) {
+        } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(e.getMessage()).build();
         }
@@ -56,9 +57,9 @@ public class ProjectController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateProject(
             @PathParam("id") final int id,
-            final ProjectRequest productRequest) {
+            final ProjectRequest projectRequest) {
         try {
-            productRequest.updateProject(id, productRequest);
+            projectService.updateProduct(id, projectRequest);
             return Response.noContent().build();
         } catch (SQLException e) {
             //return Response.serverError().build();

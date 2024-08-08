@@ -1,5 +1,12 @@
 package org.example.daos;
 
+import org.checkerframework.checker.units.qual.C;
+import org.example.models.Client;
+import org.example.models.DeliveryEmployee;
+import org.example.models.Employee;
+import org.example.models.Project;
+import org.example.models.ProjectRequest;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +27,7 @@ public class ProjectDao {
         PreparedStatement st = c.prepareStatement(insertStatement,
                 Statement.RETURN_GENERATED_KEYS);
 
-        st.setString(1, project.getName());
+        st.setString(1, project.getProjectName());
         st.setBoolean(2, project.getIsCompleted());
         st.setInt(1, project.getClientId());
         st.setInt(1, project.getValue());
@@ -46,7 +53,7 @@ public class ProjectDao {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(
-                    "SELECT ProjectId, DeliveryID, Name,TechLead,isCompleted "
+                    "SELECT ProjectId, DeliveryID, Name,TechLeadID,isCompleted "
                             +
                             "FROM Project JOIN WorksOn"
                             +
@@ -56,14 +63,13 @@ public class ProjectDao {
                             +
                             "AND IsCompleted = 'false'");
 
+
             while (resultSet.next()) {
                 Project project = new Project(
-                        resultSet.getInt("ProductID"),
-                        new DeliveryEmployee(
-                                resultSet.getInt("DeliveryEmployeeId"),
-                                resultSet.getString("Name"),
-                                resultSet.getString("Description"),
-                                resultSet.getDouble("Price")));
+                        resultSet.getInt("ProjectId"),
+                        resultSet.getString("Name"),
+                        new DeliveryEmployee(resultSet.getInt("DeliveryEmployeeID"), new Employee()),
+                        resultSet.getString("Name");
 
                 projects.add(project);
             }
@@ -81,25 +87,22 @@ public class ProjectDao {
                         +
                         "WHERE ProductID = ?";
         PreparedStatement st = c.prepareStatement(updateStatement);
-        st.setInt(1, project.getProjectID());
+        st.setInt(1, project.getProjectId());
         st.setBoolean(2, project.getIsCompleted());
 
         st.executeUpdate();
 
     }
 
-}
-
-    /*
-
     public Project getProjectById(final int id) throws SQLException {
         try (Connection connection = DatabaseConnector.getConnection()) {
             String query =
-                    "SELECT ProjectId, DeliveryID, Name,TechLead, "
+                    //join for client info
+                    "SELECT ProjectId, Name, IsCompleted,ClientID,'Value', TechLeadID, "
                             +
-                            "FROM Project JOIN WorksOn"
+                            "FROM Project JOIN `Client`"
                             +
-                            " Using (ProjectID)  where DeliveryID = ?;";
+                            "USING (ClientID) where ProjectID = ?;";
 
             PreparedStatement statement = connection.prepareStatement(query);
 
@@ -109,17 +112,21 @@ public class ProjectDao {
 
             while (resultSet.next()) {
                 return new Project(
-                        resultSet.getInt("ProductID"),
-                        new DeliveryEmployee(resultSet.getInt("DeliveryEmployeeID"),
+                        resultSet.getInt("ProjectId"),
                         resultSet.getString("Name"),
-                        resultSet.getInt("TechLead")));
+                        resultSet.getInt("Value"),
+                        new Client(resultSet.getInt("ClientID"),
+                        resultSet.getBoolean("IsCompleted"),
+                        new DeliveryEmployee(resultSet.getInt("DeliveryEmployeeId"),
+                                new Employee());
+
 
             }
             return null;
         }
     }
+}
 
-     */
 
 
 
