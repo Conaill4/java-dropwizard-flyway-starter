@@ -3,13 +3,13 @@ package org.example.models;
 public class ClientResponse {
     private int clientId;
     private String clientName;
-    private int salesEmployeeId;
+   // private int salesEmployeeId;
 
-    public ClientResponse(final int clientId, final String clientName,
-                          final int salesEmployeeId) {
+    public ClientResponse(final int clientId, final String clientName
+                          ) {
         this.clientId = clientId;
         this.clientName = clientName;
-        this.salesEmployeeId = salesEmployeeId;
+
     }
 
     public int getClientId() {
@@ -26,13 +26,5 @@ public class ClientResponse {
 
     public void setClientName(final String clientName) {
         this.clientName = clientName;
-    }
-
-    public int getSalesEmployeeId() {
-        return salesEmployeeId;
-    }
-
-    public void setSalesEmployeeId(final int salesEmployeeId) {
-        this.salesEmployeeId = salesEmployeeId;
     }
 }
