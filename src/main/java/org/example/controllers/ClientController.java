@@ -1,9 +1,6 @@
 package org.example.controllers;
 
 import io.swagger.annotations.Api;
-
-import org.example.models.ClientRequest;
-
 import org.example.services.ClientService;
 
 import javax.ws.rs.*;
@@ -26,10 +23,17 @@ public class ClientController {
     {   try {
         return Response.ok().entity(clientService.getAllClients()).build();
     }catch (SQLException e){
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        return Response.status(Response.Status
+                .INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+    }
+
     }
 
 
-    }
+
 
 }
+
+
+
+

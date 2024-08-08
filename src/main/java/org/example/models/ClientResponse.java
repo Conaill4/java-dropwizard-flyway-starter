@@ -3,7 +3,6 @@ package org.example.models;
 public class ClientResponse {
     private int clientId;
     private String clientName;
-   // private int salesEmployeeId;
 
     public ClientResponse(final int clientId, final String clientName
                           ) {
@@ -28,3 +27,5 @@ public class ClientResponse {
         this.clientName = clientName;
     }
 }
+
+

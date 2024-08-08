@@ -1,7 +1,6 @@
 package org.example.daos;
 
 import org.example.models.Client;
-import org.example.models.ClientRequest;
 import org.example.models.Employee;
 import org.example.models.SalesEmployee;
 
@@ -19,13 +18,15 @@ public class ClientDao {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(
-                    "SELECT ClientID,ClientName,SalesEmpID,SalesEmployee.Commission FROM `Client` inner join `SalesEmployee` ON SalesEmployee.SalesID = Client.SalesEmpID;");
+        "SELECT ClientID,ClientName,SalesEmpID,SalesEmployee.Commission " +
+               "FROM `Client` inner join `SalesEmployee` ON SalesEmployee.SalesID = Client.SalesEmpID;");
 
             while (resultSet.next()) {
                 Client client = new Client(
                         resultSet.getInt("ClientID"),
                         resultSet.getString("ClientName"),
-                        new SalesEmployee(resultSet.getInt("SalesEmpID"),resultSet.getBigDecimal("Commission"),new Employee()));
+                        new SalesEmployee(resultSet.getInt("SalesEmpID")
+                                ,resultSet.getBigDecimal("Commission"),new Employee()));
                 clients.add(client);
             }
 
