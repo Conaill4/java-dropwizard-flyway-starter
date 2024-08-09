@@ -31,6 +31,9 @@ public class EmployeeService {
     EmployeeRequest employeeRequest)
             throws SQLException {
         Employee employeeToUpdate = employeeDao.getEmployeeById(id);
+
+        //NOT IN PRODUCTION
+        employeeDao.updateEmployee(id, employeeRequest);
     }
 
     public int createEmployee(final EmployeeRequest

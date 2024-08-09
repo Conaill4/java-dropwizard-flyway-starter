@@ -141,7 +141,7 @@ public class EmployeeDao {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(
-                    "SELECT EmployeeID, SalesEmployee.SalesID, SCommission"
+                    "SELECT EmployeeID, SalesEmployee.SalesID, Commission"
                             +
                             " FROM Employee "
                             +
@@ -150,8 +150,9 @@ public class EmployeeDao {
             while (resultSet.next()) {
                 SalesEmployee salesEmployee = new SalesEmployee(
                         resultSet.getInt("EmployeeID"),
-                        resultSet.getBigDecimal("CommmissionRate"),
-                        (Employee) resultSet.getObject("SalesID"));
+                        resultSet.getInt("SalesID"),
+                        resultSet.getBigDecimal("Commission"));
+
 
                 salesEmployees.add(salesEmployee);
             }
@@ -189,16 +190,17 @@ public class EmployeeDao {
             throws SQLException {
         Connection connection = DatabaseConnector.getConnection();
 
-        String updateStatment = "UPDATE Employee SET Name = ?"
+        String updateStatement = "UPDATE Employee SET Name = ?"
                 + ",Salary = ?, BankAccountNumber = ?, "
                 + "NationalInsuranceNumber = ? "
                 + "WHERE EmployeeID = ?";
-        PreparedStatement st = connection.prepareStatement(updateStatment);
+        PreparedStatement st = connection.prepareStatement(updateStatement);
 
         st.setString(1, employeeRequest.getEmployeeName());
         st.setBigDecimal(2, employeeRequest.getSalary());
         st.setInt(three, employeeRequest.getBankAccountNumber());
-        st.setInt(four, id);
+        st.setInt(four, employeeRequest.getNationalInsuranceNumber());
+        st.setInt(5, id);
 
         st.executeUpdate();
     }

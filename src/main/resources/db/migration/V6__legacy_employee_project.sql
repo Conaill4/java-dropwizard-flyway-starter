@@ -17,3 +17,5 @@ BEGIN
     VALUES (OLD.ProjectID, OLD.DeliveryID);
 
 END
+
+insert into SalesEmployee
