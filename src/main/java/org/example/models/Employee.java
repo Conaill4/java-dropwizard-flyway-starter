@@ -19,6 +19,11 @@ public class Employee {
         this.nationalInsuranceNumber = nationalInsuranceNumber;
     }
 
+    public Employee() {
+
+    }
+
+
     public int getEmployeeId() {
         return employeeId;
     }
